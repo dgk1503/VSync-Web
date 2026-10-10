@@ -1,386 +1,351 @@
-/* Hallmark · page: privacy-policy · genre: editorial · theme: grid (ultramarine)
- * macrostructure: 02-long-document · motion: cut · radius: 0 · enrichment: none (typography only)
- * contrast: accent on paper pass · focus uses the signal ink
+/* VSync · global foundation
+ * Warm beige canvas, Epilogue + DM Sans self-hosted, custom SVG cursors.
  */
 
-@import "tailwindcss";
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/fonts/DMSans-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
 
-@theme inline {
-  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+@font-face {
+  font-family: 'Epilogue';
+  src: url('/fonts/Epilogue-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
 }
 
 :root {
-  --color-paper: oklch(99% 0.003 255);
-  --color-paper-2: oklch(97.2% 0.003 255);
-  --color-paper-3: oklch(94.5% 0.003 255);
-  --color-ink: oklch(16% 0.01 255);
-  --color-muted: oklch(46% 0.012 255);
-  --color-rule: oklch(88% 0.006 255);
-  --color-accent: oklch(45% 0.19 264);
-  --color-accent-ink: var(--color-paper);
-  --color-focus: var(--color-accent);
-  --tracking-display: -0.045em;
+  --vs-bg: #f0ebe6;
+  --vs-bg-deep: #e6dfd8;
+  --vs-dark: #0e0e0e;
+  --vs-dark-soft: #1a1a1a;
+  --vs-white: #ffffff;
+  --vs-ink: #1a1a1a;
+  --vs-muted: rgba(26, 26, 26, 0.62);
+  --vs-blue: #4b69f0;
+  --vs-pink: #f0befa;
+  --vs-pink-solid: #f2648a;
+  --vs-green: #29725f;
+  --vs-orange: #f5693c;
+
+  --vs-rule: rgba(26, 26, 26, 0.14);
+  --vs-radius-panel: 28px;
+  --vs-nav-h: 84px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html,
 body {
+  background-color: var(--vs-bg);
+  color: var(--vs-ink);
+  font-family: 'Epilogue', system-ui, sans-serif;
   overflow-x: clip;
 }
 
-html {
-  scroll-behavior: smooth;
+/* the reference hides the native scrollbar */
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-body {
-  background: var(--color-paper);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.5;
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* scroll is locked until the preloader lifts.
+   No `height` here — forcing body to 100vh resets the scroll position and
+   fights Lenis. */
+body.vs-locked {
+  overflow: hidden;
+  touch-action: none;
+}
+
+.vs-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-accent-ink);
+  background-color: var(--vs-pink);
+  color: var(--vs-ink);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1;
+  font-weight: 900;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
+  outline: 2px solid var(--vs-blue);
+  outline-offset: 3px;
 }
 
-/* ---- the sheet ------------------------------------------------------ */
-
-.page {
-  position: relative;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+/* custom cursors — matching the reference's hand-drawn set */
+body {
+  cursor: url('/assets/cursors/cursor-default.svg') 2 0, auto;
 }
 
-.sheet {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 1280px;
-  margin-inline: auto;
-  padding-inline: clamp(20px, 4.5vw, 56px);
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+.cursor-pointer,
+a,
+button {
+  cursor: url('/assets/cursors/cursor-pointer.svg') 12 12, pointer;
 }
 
-/* ---- label voice: the quiet caps counterpoint ----------------------- */
 
-.label {
+/* --- Shared: cursor bubble + footer ---------------------------------------
+ * Used by the home page and /minimallabs alike, so they live here rather
+ * than in home.css, which only the home page imports.
+ */
+
+/* ─── Cursor bubble ─────────────────────────────────────────────────────── */
+.cursor-bubble {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9500;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--vs-pink);
+  color: var(--vs-ink);
+  font-family: 'DM Sans', sans-serif;
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
-
-/* ---- folio / header -------------------------------------------------- */
-
-.folio {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-  padding-block: 18px;
-  border-bottom: 1px solid var(--color-rule);
-}
-
-.wordmark {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 3px;
-  font-weight: 800;
-  font-size: 18px;
-  letter-spacing: -0.03em;
-  text-transform: lowercase;
-}
-
-.period {
-  display: inline-block;
-  width: 0.5em;
-  height: 0.5em;
-  background: var(--color-accent);
-}
-
-.brand {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 12px;
-}
-
-.folio-link {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  text-decoration: none;
-}
-
-.folio-link:hover {
-  color: var(--color-accent);
-}
-
-.team {
-  font-size: clamp(17px, 2.2vw, 22px);
   font-weight: 700;
-  letter-spacing: -0.02em;
-  text-transform: lowercase;
-  color: var(--color-ink);
-  border-left: 1px solid var(--color-rule);
-  padding-left: 14px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform;
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.35);
 }
 
-/* ---- hero ------------------------------------------------------------ */
-
-.hero {
-  padding-block: clamp(48px, 9vw, 116px) clamp(32px, 5vw, 64px);
+@media (hover: none) {
+  .cursor-bubble {
+    display: none;
+  }
+}
+/* ─── Footer ──────────────────────────────────────────────────────────────
+ * Blue inset panel, columns up top, and a wordmark pinned edge to edge
+ * across the bottom. `textLength` makes the SVG text match the viewBox
+ * exactly, so it always spans the full width without distorting glyphs.
+ */
+.vs-footer {
+  width: calc(100% - 24px);
+  margin: 12px auto;
 }
 
-.display {
-  font-weight: 800;
-  text-transform: lowercase;
-  font-size: clamp(52px, 10.5vw, 136px);
-  letter-spacing: var(--tracking-display);
-  line-height: 0.9;
-  margin: 14px 0 30px;
-}
-
-.lede {
-  font-size: 19px;
-  line-height: 1.65;
-  max-width: 60ch;
-  margin-top: 18px;
-}
-
-.lede strong {
-  font-weight: 600;
-}
-
-/* ---- the one poster moment ------------------------------------------- */
-
-.plate {
+.vs-footer__inner {
   position: relative;
-  overflow: clip;
-  background: var(--color-accent);
-  color: var(--color-accent-ink);
-  padding: clamp(28px, 5vw, 56px) clamp(20px, 3vw, 40px);
-  margin-block: clamp(28px, 5vw, 56px);
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  min-height: min(64vh, 600px);
+  overflow: hidden;
+  border-radius: var(--vs-radius-panel);
+  background: var(--vs-blue);
+  color: var(--vs-white);
+  padding: clamp(32px, 5vw, 60px) clamp(20px, 3.4vw, 54px) 0;
+}
+
+.vs-footer__top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 28px 40px;
+}
+
+.vs-footer__col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.vs-footer__badge {
+  display: inline-block;
+  padding: 5px 13px;
+  border-radius: 20px;
+  border-bottom-left-radius: 3px;
+  background: var(--vs-white);
+  color: var(--vs-ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.vs-footer__headline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  transition: opacity 0.2s ease;
+}
+
+a.vs-footer__headline:hover {
+  opacity: 0.75;
+}
+
+.vs-footer__headline svg {
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.25, 1.2);
+}
+
+a.vs-footer__headline:hover svg {
+  transform: translate(3px, -3px);
+}
+
+.vs-footer__sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.78;
+}
+
+.vs-footer__sub--mail {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+}
+
+.vs-footer__sub--mail:hover {
+  opacity: 1;
+}
+
+.vs-footer__marks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  margin-top: auto;
+  padding: 26px 0;
+}
+
+.vs-footer__links {
+  display: flex;
   gap: 20px;
 }
 
-.plate::before {
-  content: none;
+.vs-footer__links a {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
 }
 
-.plate > * {
-  position: relative;
+.vs-footer__links a:hover {
+  opacity: 1;
 }
 
-.plate-head {
-  font-weight: 800;
-  text-transform: lowercase;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  font-size: clamp(30px, 5.5vw, 64px);
-  max-width: 18ch;
-}
-
-.plate-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 28px;
-}
-
-.plate-list li {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+.vs-footer__crew {
+  font-family: 'DM Sans', sans-serif;
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  opacity: 0.7;
 }
 
-.plate-list li::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  background: currentColor;
+.vs-footer__mark {
+  /* pulls the wordmark back out to the panel's own edges, so it spans the
+     full width instead of stopping at the content gutter */
+  margin-left: calc(-1 * clamp(20px, 3.4vw, 54px));
+  margin-right: calc(-1 * clamp(20px, 3.4vw, 54px));
+  margin-top: 2px;
+  color: var(--vs-white);
+  line-height: 0;
 }
 
-/* ---- contents -------------------------------------------------------- */
-
-.contents {
-  border-top: 1px solid var(--color-rule);
-  padding-block: 28px;
+.vs-footer__mark svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-.contents ol {
-  list-style: none;
-  padding: 0;
-  margin: 14px 0 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  column-gap: clamp(24px, 4vw, 48px);
-}
-
-.contents li {
-  border-top: 1px solid var(--color-rule);
-}
-
-.contents a {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  padding-block: 10px;
-  color: var(--color-ink);
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 14.5px;
-}
-
-.contents a:hover {
-  color: var(--color-accent);
-}
-
-.toc-no {
-  font-weight: 800;
-  color: var(--color-accent);
+/* 344px measures ~1000 units of natural advance at this tracking, so
+   `textLength` lands on the real width instead of stretching the tracking
+   (at 290px it was 842 units, i.e. 19% letter-spaced apart). */
+.vs-footer__mark text {
+  font-family: 'Epilogue', sans-serif;
+  font-size: 344px;
+  font-weight: 900;
   letter-spacing: -0.02em;
 }
 
-/* ---- long-document sections ------------------------------------------ */
+@media (max-width: 720px) {
+  .vs-footer {
+    width: calc(100% - 16px);
+    margin: 8px auto;
+  }
 
-.sec {
-  position: relative;
-  overflow: clip;
-  border-top: 1px solid var(--color-rule);
-  padding-block: clamp(36px, 6vw, 72px);
-  scroll-margin-top: 24px;
-}
+  .vs-footer__inner {
+    min-height: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 
-/* the cropped section numeral — art, not a heading */
-.sec > .numeral {
-  position: absolute;
-  right: -0.06em;
-  top: clamp(8px, 2vw, 24px);
-  font-weight: 800;
-  font-size: clamp(120px, 22vw, 320px);
-  line-height: 0.8;
-  letter-spacing: -0.05em;
-  color: color-mix(in oklab, var(--color-ink) 8%, transparent);
-  user-select: none;
-  pointer-events: none;
-}
+  .vs-footer__top {
+    flex-direction: column;
+  }
 
-.sec > *:not(.numeral) {
-  position: relative;
-}
-
-.sec h2 {
-  font-weight: 700;
-  text-transform: lowercase;
-  letter-spacing: -0.03em;
-  font-size: clamp(26px, 4vw, 44px);
-  line-height: 1.05;
-  margin: 8px 0 22px;
-  max-width: 22ch;
-}
-
-.prose {
-  max-width: 62ch;
-}
-
-.prose p {
-  line-height: 1.65;
-  margin-block: 14px;
-}
-
-.prose strong {
-  font-weight: 600;
-}
-
-/* typographic link inside a paragraph, not a button */
-.prose a {
-  color: var(--color-ink);
-  text-decoration: underline;
-  text-decoration-color: var(--color-accent);
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 3px;
-}
-
-.prose a:hover {
-  color: var(--color-accent);
-}
-
-/* fact rows: hairline-ruled, label voice on the left */
-.facts {
-  margin-top: 24px;
-  max-width: 62ch;
-  border-top: 1px solid var(--color-rule);
-}
-
-.facts > div {
-  display: grid;
-  grid-template-columns: minmax(140px, 200px) 1fr;
-  gap: 6px 20px;
-  padding-block: 14px;
-  border-bottom: 1px solid var(--color-rule);
-}
-
-.facts dt {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  padding-top: 4px;
-}
-
-.facts dd {
-  margin: 0;
-  line-height: 1.6;
-}
-
-@media (max-width: 560px) {
-  .facts > div {
-    grid-template-columns: 1fr;
+  .vs-footer__marks {
+    margin-top: 36px;
   }
 }
-
-/* ---- footer ----------------------------------------------------------- */
-
-.footer {
-  margin-top: auto;
-  border-top: 1px solid var(--color-rule);
-  padding-block: 18px 26px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-}
-
-/* ---- motion: cut ------------------------------------------------------ */
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  * {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    animation: none !important;
   }
 }

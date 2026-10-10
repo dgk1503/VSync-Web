@@ -1,21 +1,14 @@
-import { Archivo } from "next/font/google";
-import "./globals.css";
-
-const archivo = Archivo({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-archivo",
-  display: "swap",
-});
+import './globals.css';
 
 export const metadata = {
-  title: "VSync — Minimalistic way to browse VTOP",
-  description: "Minimalistic way to browse VTOP",
+  title: 'VSync — a minimalistic way to browse VTOP',
+  description:
+    'A minimalistic, lightweight, unopinionated, open-source academic companion for VIT-AP students.',
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={archivo.variable}>
+    <html lang="en">
       <body>{children}</body>
     </html>
   );
